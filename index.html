@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow Pro</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Inter, Arial, sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: #070b18; color: #ffffff; overflow-x: hidden; }
+    .bg-glow { position: fixed; width: 420px; height: 420px; border-radius: 50%; filter: blur(90px); opacity: 0.45; z-index: -1; }
+    .glow-one { background: #6d5dfc; top: -120px; left: -100px; }
+    .glow-two { background: #06b6d4; right: -130px; top: 250px; }
+    header { position: sticky; top: 0; z-index: 100; background: rgba(7, 11, 24, 0.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .navbar { width: 92%; max-width: 1200px; margin: auto; padding: 18px 0; display: flex; justify-content: space-between; align-items: center; }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 900; }
+    .logo-icon { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg,#6d5dfc,#06b6d4); display: grid; place-items: center; }
+    nav a { color: #cbd5e1; text-decoration: none; margin-left: 24px; font-size: 15px; font-weight: 600; }
+    nav a:hover { color: white; }
+    .nav-btn { padding: 11px 18px; border-radius: 999px; background: white; color: #0f172a !important; }
+    .hero { width: 92%; max-width: 1200px; margin: auto; min-height: 88vh; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 55px; align-items: center; padding: 70px 0; }
+    .pill { display: inline-flex; padding: 10px 16px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #c4b5fd; font-weight: 700; margin-bottom: 22px; }
+    .hero h1 { font-size: clamp(42px,6vw,74px); line-height: 1.02; letter-spacing: -2.5px; margin-bottom: 22px; }
+    .gradient-text { background: linear-gradient(135deg,#a78bfa,#22d3ee,#fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: #cbd5e1; font-size: 19px; line-height: 1.8; max-width: 650px; margin-bottom: 32px; }
+    .btn-primary, .btn-secondary { border: none; padding: 15px 24px; border-radius: 16px; font-weight: 800; font-size: 15px; cursor: pointer; text-decoration: none; display: inline-block; }
+    .btn-primary { background: linear-gradient(135deg,#7c3aed,#06b6d4); color: white; }
+    .btn-secondary { background: rgba(255,255,255,0.09); color: white; border: 1px solid rgba(255,255,255,0.14); }
+    .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-panel, .app-box, .login-box, .feature, .about-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.13); backdrop-filter: blur(18px); }
+    .hero-panel { border-radius: 30px; padding: 24px; box-shadow: 0 30px 80px rgba(0,0,0,0.35); }
+    .panel-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .status { padding: 8px 12px; border-radius: 999px; background: rgba(34,197,94,0.15); color: #86efac; font-size: 13px; font-weight: 800; }
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+    .stat-card { background: rgba(255,255,255,0.08); border-radius: 18px; padding: 16px; }
+    .stat-card h3 { font-size: 26px; }
+    .stat-card p { color: #94a3b8; font-size: 13px; margin: 0; }
+    .task-card { background: rgba(255,255,255,0.92); color: #0f172a; padding: 16px; border-radius: 20px; margin-bottom: 12px; display: flex; justify-content: space-between; gap: 12px; }
+    .task-card small { color: #64748b; font-weight: 700; }
+    .tag { padding: 7px 11px; border-radius: 999px; font-size: 12px; font-weight: 900; background: #e0f2fe; color: #0369a1; }
+    section { width: 92%; max-width: 1200px; margin: auto; padding: 75px 0; }
+    .section-header { text-align: center; max-width: 720px; margin: 0 auto 45px; }
+    .section-header h2 { font-size: clamp(34px,4vw,52px); letter-spacing: -1.5px; margin-bottom: 14px; }
+    .section-header p { color: #cbd5e1; line-height: 1.8; font-size: 17px; }
+    .features-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+    .feature { padding: 25px; border-radius: 24px; transition: 0.3s; }
+    .feature:hover { transform: translateY(-8px); background: rgba(255,255,255,0.12); }
+    .feature-icon { width: 54px; height: 54px; border-radius: 18px; background: linear-gradient(135deg,#7c3aed,#06b6d4); display: grid; place-items: center; font-size: 25px; margin-bottom: 18px; }
+    .feature h3 { margin-bottom: 10px; font-size: 20px; }
+    .feature p { color: #cbd5e1; line-height: 1.7; font-size: 15px; }
+    .login-box, .app-box { border-radius: 30px; padding: 26px; }
+    .login-box { max-width: 480px; margin: 0 auto 30px; text-align: center; }
+    .login-box h3 { font-size: 28px; margin-bottom: 12px; }
+    .login-box p { color: #cbd5e1; margin-bottom: 18px; }
+    input, select { width: 100%; padding: 15px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.09); color: white; outline: none; font-size: 15px; margin-bottom: 12px; }
+    input::placeholder { color: #94a3b8; }
+    select option { color: #0f172a; }
+    .user-bar { display: none; justify-content: space-between; align-items: center; margin-bottom: 18px; padding: 16px; border-radius: 18px; background: rgba(34,197,94,0.12); color: #bbf7d0; }
+    .task-form { display: grid; grid-template-columns: 1fr 1fr 180px auto; gap: 12px; margin-bottom: 24px; }
+    .board { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .column { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 18px; min-height: 260px; }
+    .column h3 { margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+    .count { font-size: 13px; color: #94a3b8; }
+    .board-task { background: white; color: #0f172a; border-radius: 18px; padding: 15px; margin-bottom: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
+    .board-task p { color: #64748b; font-size: 14px; margin-top: 5px; }
+    .board-task button { margin-top: 12px; margin-right: 5px; padding: 8px 10px; border: none; border-radius: 10px; cursor: pointer; font-weight: 800; background: #eef2ff; color: #4338ca; }
+    .delete-btn { background: #fee2e2 !important; color: #dc2626 !important; }
+    .locked { opacity: 0.45; pointer-events: none; filter: blur(1px); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .about-card { border-radius: 28px; padding: 32px; }
+    .about-card h3 { font-size: 28px; margin-bottom: 15px; }
+    .about-card p, .about-card li { color: #cbd5e1; line-height: 1.8; }
+    .about-card ul { padding-left: 20px; }
+    footer { border-top: 1px solid rgba(255,255,255,0.08); padding: 28px 8%; text-align: center; color: #94a3b8; }
+    @media (max-width: 980px) { .hero, .about-grid { grid-template-columns: 1fr; } .features-grid { grid-template-columns: repeat(2,1fr); } .task-form, .board { grid-template-columns: 1fr; } }
+    @media (max-width: 650px) { .navbar { flex-direction: column; gap: 14px; } nav { text-align: center; } nav a { margin: 7px; display: inline-block; } .features-grid, .stats { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="bg-glow glow-one"></div>
+  <div class="bg-glow glow-two"></div>
+
+  <header>
+    <div class="navbar">
+      <div class="logo"><span class="logo-icon">✓</span> TaskFlow Pro</div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#app">Tasks</a>
+        <a href="#about">About</a>
+        <a href="#login" class="nav-btn">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div>
+        <div class="pill">⚡ Smart Task Management</div>
+        <h1>Organize work faster with a <span class="gradient-text">modern task dashboard</span></h1>
+        <p>Login first, then create, update, move, and delete your tasks in one clean workspace.</p>
+        <div class="hero-buttons">
+          <a href="#login" class="btn-primary">Login to Add Tasks</a>
+          <a href="#features" class="btn-secondary">View Features</a>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="panel-top"><h2>Today’s Work</h2><span class="status">Protected</span></div>
+        <div class="stats">
+          <div class="stat-card"><h3>12</h3><p>Total Tasks</p></div>
+          <div class="stat-card"><h3>7</h3><p>In Progress</p></div>
+          <div class="stat-card"><h3>5</h3><p>Done</p></div>
+        </div>
+        <div class="task-card"><div><b>Design homepage UI</b><br><small>Due today</small></div><span class="tag">Progress</span></div>
+        <div class="task-card"><div><b>Connect API data</b><br><small>Backend task</small></div><span class="tag">Pending</span></div>
+        <div class="task-card"><div><b>Mobile responsive layout</b><br><small>Completed</small></div><span class="tag">Done</span></div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="section-header">
+        <h2>Excellent Features</h2>
+        <p>A clean and powerful task management website with login protection.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature"><div class="feature-icon">🔐</div><h3>Login Required</h3><p>User must login before adding new tasks.</p></div>
+        <div class="feature"><div class="feature-icon">📝</div><h3>CRUD Tasks</h3><p>Create, view, update, move, and delete tasks easily.</p></div>
+        <div class="feature"><div class="feature-icon">⚡</div><h3>Fast Dashboard</h3><p>Tasks instantly appear in the selected status column.</p></div>
+        <div class="feature"><div class="feature-icon">📱</div><h3>Responsive UI</h3><p>The design works on laptop, tablet, and mobile screens.</p></div>
+      </div>
+    </section>
+
+    <section id="login">
+      <div class="section-header">
+        <h2>Login</h2>
+        <p>Login first to unlock the task board.</p>
+      </div>
+      <div class="login-box" id="loginBox">
+        <h3>Welcome Back</h3>
+        <p>Use any email and password for this demo login.</p>
+        <input type="email" id="email" placeholder="Enter email" />
+        <input type="password" id="password" placeholder="Enter password" />
+        <button class="btn-primary" onclick="loginUser()">Login</button>
+      </div>
+    </section>
+
+    <section id="app">
+      <div class="section-header">
+        <h2>Task Board</h2>
+        <p>Add tasks after login. Without login, the task board is locked.</p>
+      </div>
+
+      <div class="app-box">
+        <div class="user-bar" id="userBar">
+          <b id="welcomeText">Logged in</b>
+          <button class="btn-secondary" onclick="logoutUser()">Logout</button>
+        </div>
+
+        <div id="taskArea" class="locked">
+          <div class="task-form">
+            <input type="text" id="taskTitle" placeholder="Task title" />
+            <input type="text" id="taskDescription" placeholder="Task description" />
+            <select id="taskStatus">
+              <option value="pending">Pending</option>
+              <option value="progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+            <button class="btn-primary" onclick="addTask()">Add Task</button>
+          </div>
+
+          <div class="board">
+            <div class="column">
+              <h3>Pending <span class="count" id="pendingCount">0 tasks</span></h3>
+              <div id="pendingTasks"></div>
+            </div>
+            <div class="column">
+              <h3>In Progress <span class="count" id="progressCount">0 tasks</span></h3>
+              <div id="progressTasks"></div>
+            </div>
+            <div class="column">
+              <h3>Completed <span class="count" id="completedCount">0 tasks</span></h3>
+              <div id="completedTasks"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-header"><h2>Why Use TaskFlow Pro?</h2><p>This website is designed like a real modern productivity application.</p></div>
+      <div class="about-grid">
+        <div class="about-card"><h3>Simple Workflow</h3><p>Login, add tasks, select status, move tasks, and delete tasks easily.</p></div>
+        <div class="about-card"><h3>Expected Learning</h3><ul><li>User authentication concept</li><li>Task CRUD operations</li><li>Dynamic data handling</li><li>Responsive web design</li></ul></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><p>© 2026 TaskFlow Pro. Modern Task Management Website.</p></footer>
+
+  <script>
+    let isLoggedIn = false;
+
+    function loginUser() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (email === '' || password === '') {
+        alert('Please enter email and password');
+        return;
+      }
+
+      isLoggedIn = true;
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('taskArea').classList.remove('locked');
+      document.getElementById('userBar').style.display = 'flex';
+      document.getElementById('welcomeText').innerText = 'Logged in as ' + email;
+      alert('Login successful. Now you can add tasks.');
+      location.href = '#app';
+    }
+
+    function logoutUser() {
+      isLoggedIn = false;
+      document.getElementById('loginBox').style.display = 'block';
+      document.getElementById('taskArea').classList.add('locked');
+      document.getElementById('userBar').style.display = 'none';
+      document.getElementById('email').value = '';
+      document.getElementById('password').value = '';
+      location.href = '#login';
+    }
+
+    function addTask() {
+      if (!isLoggedIn) {
+        alert('Please login first to add tasks');
+        location.href = '#login';
+        return;
+      }
+
+      const title = document.getElementById('taskTitle').value.trim();
+      const description = document.getElementById('taskDescription').value.trim();
+      const status = document.getElementById('taskStatus').value;
+
+      if (title === '') {
+        alert('Please enter a task title');
+        return;
+      }
+
+      const task = document.createElement('div');
+      task.className = 'board-task';
+      task.innerHTML = `
+        <b>${title}</b>
+        <p>${description || 'No description added.'}</p>
+        <button onclick="moveTask(this, '${status === 'completed' ? 'pending' : status === 'pending' ? 'progress' : 'completed'}')">Move</button>
+        <button class="delete-btn" onclick="deleteTask(this)">Delete</button>
+      `;
+
+      document.getElementById(status + 'Tasks').appendChild(task);
+      document.getElementById('taskTitle').value = '';
+      document.getElementById('taskDescription').value = '';
+      document.getElementById('taskStatus').value = 'pending';
+      updateCounts();
+    }
+
+    function moveTask(button, nextStatus) {
+      if (!isLoggedIn) {
+        alert('Please login first');
+        return;
+      }
+
+      const task = button.parentElement;
+      document.getElementById(nextStatus + 'Tasks').appendChild(task);
+
+      let next = 'progress';
+      if (nextStatus === 'progress') next = 'completed';
+      if (nextStatus === 'completed') next = 'pending';
+      if (nextStatus === 'pending') next = 'progress';
+
+      task.querySelector('button').setAttribute('onclick', `moveTask(this, '${next}')`);
+      updateCounts();
+    }
+
+    function deleteTask(button) {
+      if (!isLoggedIn) {
+        alert('Please login first');
+        return;
+      }
+      button.parentElement.remove();
+      updateCounts();
+    }
+
+    function updateCounts() {
+      const pending = document.getElementById('pendingTasks').children.length;
+      const progress = document.getElementById('progressTasks').children.length;
+      const completed = document.getElementById('completedTasks').children.length;
+      document.getElementById('pendingCount').innerText = pending + (pending === 1 ? ' task' : ' tasks');
+      document.getElementById('progressCount').innerText = progress + (progress === 1 ? ' task' : ' tasks');
+      document.getElementById('completedCount').innerText = completed + (completed === 1 ? ' task' : ' tasks');
+    }
+
+    updateCounts();
+  </script>
+</body>
+</html>

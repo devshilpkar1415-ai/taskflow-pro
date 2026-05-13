@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow Pro Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">✅ TaskFlow Pro</div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#tasks">Tasks</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <h1>Organize work faster with a <span class="gradient-text">modern task dashboard</span></h1>
+    <p>Create, update, move, and delete your tasks in one clean workspace.</p>
+    <a href="#tasks" class="btn">Manage Tasks</a>
+  </section>
+
+  <section id="features">
+    <h2>Features</h2>
+
+    <div class="features">
+      <div class="card">
+        <h3>📝 Create Tasks</h3>
+        <p>Add new tasks quickly.</p>
+      </div>
+
+      <div class="card">
+        <h3>🔄 Move Tasks</h3>
+        <p>Move tasks from pending to progress and completed.</p>
+      </div>
+
+      <div class="card">
+        <h3>🗑 Delete Tasks</h3>
+        <p>Remove tasks easily.</p>
+      </div>
+
+      <div class="card">
+        <h3>📱 Responsive Design</h3>
+        <p>Works on mobile and laptop.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tasks">
+    <h2>Task Board</h2>
+
+    <div class="task-box">
+      <div class="task-form">
+        <input type="text" id="taskTitle" placeholder="Task title" />
+        <input type="text" id="taskDesc" placeholder="Task description" />
+
+        <select id="taskStatus">
+          <option value="pending">Pending</option>
+          <option value="progress">In Progress</option>
+          <option value="completed">Completed</option>
+        </select>
+
+        <button onclick="addTask()">Add Task</button>
+      </div>
+
+      <div class="board">
+        <div class="column">
+          <h3>Pending</h3>
+          <div id="pending"></div>
+        </div>
+
+        <div class="column">
+          <h3>In Progress</h3>
+          <div id="progress"></div>
+        </div>
+
+        <div class="column">
+          <h3>Completed</h3>
+          <div id="completed"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About TaskFlow Pro</h2>
+    <p class="about-text">
+      TaskFlow Pro is a modern task management website where users can create,
+      update, track, move, and delete tasks easily.
+    </p>
+  </section>
+
+  <footer>
+    <p>© 2026 TaskFlow Pro</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
